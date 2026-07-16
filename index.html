@@ -1,0 +1,33 @@
+<!-- 어느정도 업무에 익숙해지신것 같으니 실제 이벤트가 있는 웹페이지를 만들어봅시다.
+
+시계를 만들어봅시다.
+
+FR1) 화면에 배터리가 표시되며, 처음에 동작시키면 100%이고, 1초에 1%씩 감소합니다. 
+
+FR2) 배터리가 0%가 되면, 시계화면에서 시간이 표시되지 않고 검은색으로 변합니다.
+
+FR3) 시/분/초를 설정하고 추가를 누르면 알람이 추가됩니다. 알람 현황에도 업데이트 됩니다. 최대 3개 알람까지 가능합니다.  
+
+FR4) 본인만의 추가기능을 1개 추가합니다. 깃허브에 코드를 올리시고 공유해주시면 됩니다. -->
+
+<!DOCTYPE html>
+<html lang=“ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body>
+    <header>
+        <div class="title">[주제]사용자와 커뮤니케이션 할 수 있는 웹페이지</div>
+        <nav>
+            <div class="title">
+                <div id="batteryLevel"></div>
+                <div id="clock"></div>
+                <div id="date">00:00:00</div>
+            </div>
+        </nav>
+    </header>
+    <script src="script.js"></script>
+</body>
+</html>
