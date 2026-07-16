@@ -1,4 +1,9 @@
+//battery setting
 let batteryLevel=101;
+
+//alarm setting
+const setAlarmListElement = document.getElementById("alarmSettingAddBtn");
+setAlarmListElement.addEventListener("click", setAlarm);
 
 function getTime(){
     const currentDateTime=new Date(); //현재 날짜와 시간 객체 생성
@@ -31,4 +36,8 @@ function updateBattery(){
     }
 
     document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
+}
+
+function setAlarm(){
+    const 
 }
