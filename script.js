@@ -16,6 +16,10 @@ setInitAlarmListElement.addEventListener("click", setInitAlarm);
 const heartButton=document.getElementById("heartBtn");
 
 heartButton.addEventListener("click", heartButtonPressed);
+
+const batteryZero=document.getElementById("battaryZero");
+batteryZero.addEventListener("click", makeBatteryZero);
+
 //도메인 설정(무시처리 됨)
 // 입력 폼 제어: 양의 정수만 입력 가능하도록 설정
 document.addEventListener("DOMContentLoaded", () => {
@@ -57,30 +61,41 @@ function getTime(){
     const minutes=String(currentDateTime.getMinutes()).padStart(2,'0');
     const seconds=String(currentDateTime.getSeconds()).padStart(2,'0');
     const currentTime=`${hour}:${minutes}:${seconds}`;
-    updateBattery(-1);
+    
+    if(batteryLevel>0){
+        updateBattery(-1);
+    }
 
     return {currentDate, currentTime}
 }
 
 function displayHeadTime(){
     const {currentDate, currentTime}=getTime();
+    const clocks=document.querySelectorAll('.Clock');
 
     //화면 반영
-    document.getElementById('clock').innerText=`${currentTime}`;
-    document.getElementById('date').innerText=`${currentDate}`;
+    document.getElementById('date').innerHTML=`${currentDate}`;
+    
+    clocks.forEach(element=>{
+        element.innerText=currentTime;
+    });
 
 }
 
 function updateBattery(num){
-    document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
     
-    if(batteryLevel==0){
-        batteryLevel=batteryLevel;
-    } else if(batteryLevel+num>=100){
+    if(batteryLevel+num>=100){
         batteryLevel=100;
-    } else{
+    }else{
         batteryLevel+=num;
     }
+
+    if(batteryLevel===0){
+        blackOutPhoneDisplay();
+    }
+
+    document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
+
 }
 
 function setAlarm(){
@@ -121,6 +136,18 @@ function heartButtonPressed(){
     setTimeout(()=>{
         document.getElementById('heartBtnText').innerHTML='';
     }, 3000);
+}
+
+function blackOutPhoneDisplay(){
+    const phoneClockDisplay=document.getElementById("phoneClock");
+
+    phoneClockDisplay.style.backgroundColor='#000000';
+    phoneClockDisplay.style.color='transparent';
+}
+
+function makeBatteryZero(){
+    batteryLevel=0;
+    updateBattery(0);
 }
 
 displayHeadTime();

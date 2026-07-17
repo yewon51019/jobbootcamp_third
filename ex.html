@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>심플 시계</title>
+    <style>
+        /* 1. 화면 전체의 여백을 없애고 배경색 지정 */
+        body {
+            margin: 0;
+            background-color: #111; /* 어두운 배경 */
+            color: #fff;            /* 흰색 글씨 */
+            font-family: 'Courier New', Courier, monospace; /* 시계 느낌 나는 폰트 */
+            
+            /* 2. 화면 정중앙 정렬을 위한 핵심 CSS */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* 화면 꽉 차게 */
+        }
+
+        /* 3. 시계 글자 크기 조정 */
+        #clock {
+            font-size: 5rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 시계가 표시될 공간 -->
+    <div id="clock">00:00:00</div>
+
+    <script>
+        function updateClock() {
+            const now = new Date();
+            
+            // 시, 분, 초를 가져오고 항상 2자리 숫자가 되도록 처리 (예: 5초 -> 05초)
+            const hours = String(now.getHours()).padStart(2, '0');
+            const minutes = String(now.getMinutes()).padStart(2, '0');
+            const seconds = String(now.getSeconds()).padStart(2, '0');
+            
+            // HTML 화면에 시간 반영
+            document.getElementById('clock').innerText = `${hours}:${minutes}:${seconds}`;
+        }
+
+        // 페이지가 열리면 바로 시계를 한 번 실행하고, 이후 1초(1000ms)마다 반복
+        updateClock();
+        setInterval(updateClock, 1000);
+    </script>
+</body>
+</html>
