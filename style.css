@@ -1,0 +1,50 @@
+/* 기본값 초기화 */
+footer, header, nav, section {
+    display: block;
+}
+html, body {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+ol, ul {
+    list-style: none;
+}
+
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #98c4a3;
+    --tertiary-color: rgb(250, 221, 124);
+
+    --bg-color: rgb(228, 188, 255);
+    --text-color: black;
+    --white: #ffffff;
+
+    --border-radius:8px;
+    --border: 3px;
+}
+
+/* 헤더 */
+header {
+    background-color: var(--primary-color);
+    padding:10px;
+}
+
+.container {
+  max-width: 1200px; /* 화면이 아무리 커져도 최대 1200px까지만 */
+  margin: 40px auto; /* 위아래 여백을 주고 좌우는 가운데 정렬 */
+  padding: 0 20px;   /* 화면이 작아졌을 때 좌우 여백 확보 */
+}
+
+.button {
+    background-color: grey;
+    color: var(--white);
+    border-color: black;
+    padding: 5 5 2 2px;
+}
+
+*heartBtn{
+    background-color: transparent;
+    width: 50;
+    height: 50;
+}
