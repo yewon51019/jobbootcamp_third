@@ -1,9 +1,9 @@
 //battery setting
-let batteryLevel=101;
+let batteryLevel=100;
 
 //alarm setting
-const setAlarmListElement = document.getElementById("alarmSettingAddBtn");
-setAlarmListElement.addEventListener("click", setAlarm);
+// const setAlarmListElement = document.getElementById("alarmSettingAddBtn");
+// setAlarmListElement.addEventListener("click", setAlarm);
 
 function getTime(){
     const currentDateTime=new Date(); //현재 날짜와 시간 객체 생성
@@ -18,26 +18,37 @@ function getTime(){
     const minutes=String(currentDateTime.getMinutes()).padStart(2,'0');
     const seconds=String(currentDateTime.getSeconds()).padStart(2,'0');
     const currentTime=`${hour}:${minutes}:${seconds}`;
+    updateBattery();
+
+    return {currentDate, currentTime}
+}
+
+function displayHeadTime(){
+    const {currentDate, currentTime}=getTime();
 
     //화면 반영
     document.getElementById('clock').innerText=`${currentTime}`;
     document.getElementById('date').innerText=`${currentDate}`;
 
-
-    updateBattery();
 }
 
-getTime();
-setInterval(getTime, 1000);
-
 function updateBattery(){
+    document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
+    
     if (batteryLevel>0) {
         batteryLevel=batteryLevel-1;
     }
-
-    document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
 }
 
-function setAlarm(){
-    const 
-}
+// function setAlarm(){
+//     const SettedAlarmHour=parseInt(document.getElementById('alarmSettingHour'));
+//     const SettedAlarmMinutes=parseInt(document.getElementById('alarmSettingMinutes'));
+//     const SettedAlarmSeconds=parseInt(document.getElementById('alarmSettingSeconds'));
+
+//     function makeSettedAlarmList{
+//         const 
+//     }
+// }
+
+displayHeadTime();
+setInterval(displayHeadTime, 1000);
