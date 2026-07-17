@@ -1,84 +1,87 @@
-<!-- 어느정도 업무에 익숙해지신것 같으니 실제 이벤트가 있는 웹페이지를 만들어봅시다.
-
-시계를 만들어봅시다.
-
-FR1) 화면에 배터리가 표시되며, 처음에 동작시키면 100%이고, 1초에 1%씩 감소합니다. 
-
-FR2) 배터리가 0%가 되면, 시계화면에서 시간이 표시되지 않고 검은색으로 변합니다.
-
-FR3) 시/분/초를 설정하고 추가를 누르면 알람이 추가됩니다. 알람 현황에도 업데이트 됩니다. 최대 3개 알람까지 가능합니다.  
-
-FR4) 본인만의 추가기능을 1개 추가합니다. 깃허브에 코드를 올리시고 공유해주시면 됩니다. -->
-
 <!DOCTYPE html>
-<html lang=“ko">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Document</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>배터리 및 알람 시계</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-       </div>
-        </nav>
-    </header>
-         <div class="Title">
-                <div id="batteryLevel"></div>
-                <div class="Clock" id="clock"></div>
-                <div id="date">00:00:00</div>
-            <div id="alarmSetting">
-                시:
-                <input type="number"  id="alarmSettingHour">
-                분:
-                <input type="number" id="alarmSettingMinutes">
+    <!-- 전체 콘텐츠를 화면 중앙에 모아줄 컨테이너 -->
+    <div class="app-container">
+        
+        <!-- [상단 영역] 제목 및 배터리/시계 바 -->
+        <header>
+            <div class="Title">[주제]사용자와 커뮤니케이션 할 수 있는 웹페이지</div>
+            <nav>
+                <div class="Title">
+                    <div id="batteryLevel">배터리잔량: 100%</div>
+                    <div class="Clock" id="clock">00:00:00</div>
+                    <div id="date">00:00:00</div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- [메인 영역] 좌측 알람 / 우측 핸드폰 5:5 분리 -->
         <main>
-        <section id="alarmSettingArea">
-            <h3>알람 설정 폼</h3>
-         <header>
-        <div class="Title">[주제]사용자와 커뮤니케이션 할 수 있는 웹페이지</div>
-        <nav>
-               초:
-                <input type="number" id="alarmSettingSeconds">
-                <button type="button" id="alarmSettingAddBtn" class="button">추가</button>
+            <!-- 좌측: 알람 설정 및 목록 구역 -->
+            <section id="alarmSettingArea">
+                <h3>알람 설정 폼</h3>
+                <div id="alarmSetting">
+                    시: <input type="number" id="alarmSettingHour">
+                    분: <input type="number" id="alarmSettingMinutes">
+                    초: <input type="number" id="alarmSettingSeconds">
+                    <button type="button" id="alarmSettingAddBtn" class="button">추가</button>
+                </div>
+                <ul id="alarnSettingList">
+                    <li class="AlarmItem">
+                        <div class="AlarmSettingElement">
+                            <div class="Alarm">알람1</div>
+                            <div id="alarmSettingElement1">00:00:00</div>
+                        </div>
+                    </li>
+                    <li class="AlarmItem">
+                        <div class="AlarmSettingElement">
+                            <div class="Alarm">알람2</div>
+                            <div id="alarmSettingElement2">00:00:00</div>
+                        </div>
+                    </li>
+                    <li class="AlarmItem">
+                        <div class="AlarmSettingElement">
+                            <div class="Alarm">알람3</div>
+                            <div id="alarmSettingElement3">00:00:00</div>
+                        </div>
+                    </li>
+                    <li class="AlarmItem btn-row">
+                        <button type="button" class="AlarmSettingElement button" id="initAlarmListElementBtn">초기화</button>
+                    </li>
+                </ul>
+            </section>
+
+            <!-- 우측: 핸드폰 화면 영역 (검은 네모 안 흰색 네모) -->
+            <section id="clockDisplayArea">
+                <div class="PhoneScreen">
+                    <div id="phoneCamera"></div>
+                    <div id="phoneClock" class="Clock">00:00:00</div>
+                    <div id="phoneHome"></div>
+                </div>
+            </section>
+        </main>
+
+        <!-- 방전 버튼 -->
+        <button type="button" id="battaryZero" class="button">방전</button>
+
+        <!-- [하단 영역] 하트 충전 구역 -->
+        <footer>
+            <div>
+                <button type="button" id="heartBtn">
+                    <img type="button" id="heartIMG" src="img/heart.png" alt="❤️">
+                </button>
+                <h3 id="heartBtnText"></h3>
             </div>
-            <ul id="alarnSettingList">
-                <li class="AlarmItem">
-                    <div class="AlarmSettingElement">
-                        <div class="Alarm">알람1</div>
-                        <div  id="alarmSettingElement1">00:00:00</div>
-                    </div>
-                </li>
-                <li class="AlarmItem">
-                    <div class="AlarmSettingElement">
-                        <div class="Alarm">알람2</div>
-                        <div id="alarmSettingElement2">00:00:00</div>
-                    </div>
-                </li>
-                <li class="AlarmItem">
-                    <div class="AlarmSettingElement">
-                        <div class="Alarm">알람3</div>
-                        <div id="alarmSettingElement3">00:00:00</div>
-                    </div>
-                </li>
-                <li class="AlarmItem">
-                    <button class="button" id="initAlarmListElementBtn">초기화</button>
-                </li>
-            </ul>
-        </section>
-        <section id="clockDisplayArea">
-            <div class="PhoneScreen">
-                <div id="phoneCamera"></div>
-                <div id="phoneClock" class="Clock"></div>
-                <div id="phoneHome"></div>
-            </div>
-        </section>
-    </main>
-    <button type="button" id="battaryZero" class="button">방전</button>
-    <footer>
-        <button type="button" id="heartBtn">
-             <img type="button" src="img/heart.png" alt="이미지를 불러오지 못하였습니다.">
-        </button>
-        <h3 id="heartBtnText"></h3>
-    </footer>
+        </footer>
+
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
