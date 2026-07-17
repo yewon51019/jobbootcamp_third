@@ -11,22 +11,38 @@ const setInitAlarmListElement=document.getElementById("initAlarmListElementBtn")
 setAlarmListElement.addEventListener("click", setAlarm);
 setInitAlarmListElement.addEventListener("click", setInitAlarm);
 
-//도메인 설정
-// document.addEventListener("DOMContentLoaded", ()=>{
-//     const numberInput=document.querySelectorAll('input[type="number"]')
+//haert img pressed
 
-//     numberInputs.forEach(input=>{
-//         input.addEventListener("keydown", (event)=>{
-//             if(['.','-','e','E'].includes(event.key)){
-//                 event.preventDefault();
-//             }
-//         })
+const heartButton=document.getElementById("heartBtn");
 
-//         numberInputs.addEventListener("input", function(){
-//             this.value=this.value.replace(/[^0-9]/g, '');
-//         });
-//     })
-// });
+heartButton.addEventListener("click", heartButtonPressed);
+//도메인 설정(무시처리 됨)
+// 입력 폼 제어: 양의 정수만 입력 가능하도록 설정
+document.addEventListener("DOMContentLoaded", () => {
+    // 시, 분, 초 입력창을 모두 가져옵니다.
+    const numberInputs = [
+        document.getElementById('alarmSettingHour'),
+        document.getElementById('alarmSettingMinutes'),
+        document.getElementById('alarmSettingSeconds')
+    ];
+
+    numberInputs.forEach(input => {
+        if (!input) return; // 혹시 요소가 없으면 건너뜀
+
+        // 1. 키보드로 입력할 때 음수(-), 소수점(.), 지수(e) 입력을 원천 차단
+        input.addEventListener("keydown", (event) => {
+            if (['.', '-', 'e', 'E'].includes(event.key)) {
+                event.preventDefault();
+            }
+        });
+
+        // 2. 마우스 우클릭으로 붙여넣기 등을 했을 때, 숫자가 아닌 문자는 강제로 지움
+        input.addEventListener("input", function() {
+            // 0-9가 아닌 모든 문자를 제거 (소수점, 음수 기호 등 삭제)
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+    });
+});
 
 function getTime(){
     const currentDateTime=new Date(); //현재 날짜와 시간 객체 생성
@@ -41,7 +57,7 @@ function getTime(){
     const minutes=String(currentDateTime.getMinutes()).padStart(2,'0');
     const seconds=String(currentDateTime.getSeconds()).padStart(2,'0');
     const currentTime=`${hour}:${minutes}:${seconds}`;
-    updateBattery();
+    updateBattery(-1);
 
     return {currentDate, currentTime}
 }
@@ -55,11 +71,15 @@ function displayHeadTime(){
 
 }
 
-function updateBattery(){
+function updateBattery(num){
     document.getElementById('batteryLevel').innerText=`배터리잔량:${batteryLevel}%`;
     
-    if(batteryLevel>0){
-        batteryLevel=batteryLevel-1;
+    if(batteryLevel==0){
+        batteryLevel=batteryLevel;
+    } else if(batteryLevel+num>=100){
+        batteryLevel=100;
+    } else{
+        batteryLevel+=num;
     }
 }
 
@@ -74,6 +94,11 @@ function setAlarm(){
     const minInput=document.getElementById('alarmSettingMinutes');
     const secInput=document.getElementById('alarmSettingSeconds');
 
+    if(Number(minInput.value)>60 || Number(secInput.value)>59){
+        alert("0~59 중 입력해 주세요.");
+        return;
+    }
+
     const settedAlarmHour=String(hourInput ? hourInput.value : "0" || "0").padStart(2, '0');
     const settedAlarmMinutes=String(minInput ? minInput.value : "0" || "0").padStart(2, '0');
     const settedAlarmSeconds=String(secInput ? secInput.value : "0" || "0").padStart(2, '0');
@@ -87,6 +112,15 @@ function setInitAlarm(){
     }
 
     alarmListElementCurrentNumber=0;
+}
+
+function heartButtonPressed(){
+    updateBattery(20);
+    document.getElementById('heartBtnText').innerHTML='사랑의 배터리 충전!';
+
+    setTimeout(()=>{
+        document.getElementById('heartBtnText').innerHTML='';
+    }, 3000);
 }
 
 displayHeadTime();
